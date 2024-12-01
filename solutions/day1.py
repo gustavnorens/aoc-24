@@ -11,26 +11,16 @@ def solve1():
     right = []
 
     for line in il:
-        (fst, snd) = line.split()
-        fst = int(fst)
-        snd = int(snd)
+        (fst, snd) = map(int, line.split())
         left.append(fst)
         right.append(snd)
+
     left = sorted(left)
     right = sorted(right)
-    
-    final = [0] * len(left)
-
-
-    for i in range(len(left)):
-        s += abs(left[i] - right[i])
-
 
     for i in range(len(right)):
-        final[i] = right.count(left[i])
-
-    for i in range(len(left)):
-        t += left[i] * final[i]
+        t += right.count(left[i]) * left[i]
+        s += abs(left[i] - right[i])
 
     print(s)
     print(t)
