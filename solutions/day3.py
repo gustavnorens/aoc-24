@@ -2,18 +2,21 @@ import uf
 
 inputfile = "../input/3.in"
 testfile = "../tests/3.test"
-lines = uf.read_lines(inputfile)
-#lines = uf.read_lines(testfile)
 
-#lines = ["do() don't() mul(2,3)"]
+def readLine():
+    with open (inputfile, "r") as file:
+        line = file.read()
+        return line
+line = readLine()
 
 def parse(s):
     on = True
-    t = 0
+    first = 0
+    second = 0
     for i in range(len(s)):
-        (fst, snd) = onCheck(s[i:])
-        if fst:
-            on = snd
+        (success, do) = onCheck(s[i:])
+        if success:
+            on = do
         (b1, s1) = parseMul(s[i:])
         if b1:
             (b2, s2, left) = parseNum(s1)
@@ -23,12 +26,11 @@ def parse(s):
                     (b4, s4, right) = parseNum(s3)
                     if b4:
                         (b5, _) = parseParen(s4)
-                        if b5 and on:
-                            
-                            t += left * right
-    return t
-
-
+                        if b5:
+                            if on:
+                                second += left * right
+                            first += left * right
+    return (first, second)
 
 def parseMul(s):
     if s[:4] == "mul(":
@@ -61,5 +63,4 @@ def onCheck(s):
         return (True,False)
     return (False, False)
 
-
-print(sum(list(map(parse, lines))))
+print(parse(line))
