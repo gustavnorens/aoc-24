@@ -3,12 +3,6 @@ import uf
 inputfile = "../input/3.in"
 testfile = "../tests/3.test"
 
-def readLine():
-    with open (inputfile, "r") as file:
-        line = file.read()
-        return line
-line = readLine()
-
 def parse(s):
     on = True
     first = 0
@@ -63,4 +57,6 @@ def onCheck(s):
         return (True,False)
     return (False, False)
 
-print(parse(line))
+with open (inputfile, "r") as file:
+    line = file.read()
+    print(parse(line))
