@@ -18,20 +18,6 @@ def findXMAS(x, y, dire):
         s += lines[nx][ny]
     return s == "XMAS"
 
-def solve():
-    first = 0
-    second = 0
-    for x in range(N):
-        for y in range(M):
-            for direction in itertools.product([-1, 0, 1], repeat=2):
-                if findXMAS(x, y, direction):
-                    first += 1
-            if findMAS(x, y):
-                second += 1
-                
-    return (first, second)
-
-
 def findMAS(x, y):
     count = 0
     for i,j in itertools.product([-1,1], repeat=2):
@@ -45,7 +31,19 @@ def findMAS(x, y):
         if s == "MAS":
             count += 1
     return count >= 2
-    
+
+def solve():
+    first = 0
+    second = 0
+    for x in range(N):
+        for y in range(M):
+            for direction in itertools.product([-1, 0, 1], repeat=2):
+                if findXMAS(x, y, direction):
+                    first += 1
+            if findMAS(x, y):
+                second += 1
+                
+    return (first, second)    
 
 print(solve())
 
