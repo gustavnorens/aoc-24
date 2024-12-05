@@ -1,7 +1,5 @@
 import uf
-import copy
 
-from collections import deque
 lines = uf.read_lines("../input/5.in")
 #lines = uf.read_lines("../tests/5.test")
 
