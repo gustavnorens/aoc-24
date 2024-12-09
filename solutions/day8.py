@@ -8,7 +8,6 @@ def inside(x,y):
 
 def get_antinodes(x1, y1, x2, y2):
     dx, dy = x2 - x1, y2 - y1
-    fst, snd = -1,-1
     l = []
 
     for i in range(-100, 100):
@@ -23,8 +22,11 @@ def get_antinodes(x1, y1, x2, y2):
 N = len(lines)
 M = len(lines[0])
 
-d = {key: [] for key in [chr(i) for i in range(97, 123)] + [chr(i) for i in range(65, 91)] + [chr(i) for i in range(48, 58)]
-}
+d = {key: [] 
+     for key in 
+     [chr(i) for i in range(97, 123)] + 
+     [chr(i) for i in range(65, 91)] + 
+     [chr(i) for i in range(48, 58)]}
 
 for i in range(N):
     for j in range(M):
@@ -34,8 +36,7 @@ for i in range(N):
 first = set()
 second = set()
 
-for key in d.keys():
-    cords = d[key]
+for key, cords in d.items():
     for i in range(len(cords)):
         for j in range(i+1, len(cords)):
             fst, snd = get_antinodes(*cords[i], *cords[j])
