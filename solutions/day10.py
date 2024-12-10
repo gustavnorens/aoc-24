@@ -18,6 +18,7 @@ def dfs1(start):
         x, y = stack.pop()
         if lines[x][y] == 9:
             count += 1
+            continue
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             nx, ny = x + dx, y + dy
             if 0 <= nx < N and 0 <= ny < M and (nx, ny) not in visited:
@@ -33,6 +34,7 @@ def dfs2(start):
         x, y = stack.pop()
         if lines[x][y] == 9:
             count += 1
+            continue
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             nx, ny = x + dx, y + dy
             if 0 <= nx < N and 0 <= ny < M and (nx, ny):
