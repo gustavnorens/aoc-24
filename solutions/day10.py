@@ -1,5 +1,5 @@
 import uf
-from collections import deque
+
 lines = uf.read_lines("../input/10.in")
 #lines = uf.read_lines("../tests/10.test")
 
@@ -16,15 +16,13 @@ def dfs1(start):
 
     while stack:
         x, y = stack.pop()
-        if lines[x][y] == 9:
-            count += 1
-            continue
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             nx, ny = x + dx, y + dy
-            if 0 <= nx < N and 0 <= ny < M and (nx, ny) not in visited:
-                if lines[nx][ny] == lines[x][y] + 1:
-                    visited.add((nx, ny))
-                    stack.append((nx, ny))
+            if 0 <= nx < N and 0 <= ny < M and lines[nx][ny] == lines[x][y] + 1:
+                stack.append((nx, ny))
+        if lines[x][y] == 9 and (x,y) not in visited:
+            count += 1
+            visited.add((x,y))
     return count
 
 def dfs2(start):
@@ -32,14 +30,12 @@ def dfs2(start):
     stack = [start]
     while stack:
         x, y = stack.pop()
-        if lines[x][y] == 9:
-            count += 1
-            continue
         for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             nx, ny = x + dx, y + dy
-            if 0 <= nx < N and 0 <= ny < M and (nx, ny):
-                if lines[nx][ny] == lines[x][y] + 1:
-                    stack.append((nx, ny))
+            if 0 <= nx < N and 0 <= ny < M and lines[nx][ny] == lines[x][y] + 1:
+                stack.append((nx, ny))
+        if lines[x][y] == 9:
+            count += 1
     return count
 
 first = 0
@@ -51,3 +47,11 @@ for i in range(N):
             second += dfs2((i,j))
 
 print(first, second)
+
+
+def bfs(start):
+    stack = [start]
+    while stack:
+        x, y = stack.pop()
+        for dx, dy in [(1,0), (-1,0),(0, 1),(0, -1) ]:
+            nx,ny = x + dx, y + dy
