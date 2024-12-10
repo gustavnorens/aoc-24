@@ -47,11 +47,3 @@ for i in range(N):
             second += dfs2((i,j))
 
 print(first, second)
-
-
-def bfs(start):
-    stack = [start]
-    while stack:
-        x, y = stack.pop()
-        for dx, dy in [(1,0), (-1,0),(0, 1),(0, -1) ]:
-            nx,ny = x + dx, y + dy
