@@ -21,14 +21,13 @@ def apply(num, dick):
                 dick[i+1, 1] += count
             elif len(str(stone)) % 2 == 0:
                 k = len(str(stone)) // 2
-                left = stone // (10 ** k)
-                right = stone % (10 ** k)
+                left = int(str(stone)[:k])
+                right = int(str(stone)[k:])
                 dick[i + 1, left] += count
                 dick[i + 1, right] += count
             else:
                 dick[i + 1, stone * 2024] += count
                 
-
 first = 25
 second = 75
 apply(first, f)
