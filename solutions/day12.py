@@ -3,12 +3,7 @@ from collections import defaultdict
 lines = uf.read_lines("../input/12.in")
 #lines = uf.read_lines("../tests/12.test")
 
-#lines = [[c for c in line] for line in lines]
-
-
-
-counter = 0
-def sides(l):
+def solve(l):
     region = set(l)
     perimeter = []
     for x, y in l:
@@ -16,36 +11,35 @@ def sides(l):
             if (nx, ny) not in region:
                 perimeter.append((nx,ny, (nx - x, ny - y)))
     sides = []
-    visit = set()
+    visited = set()
     for (x,y,d) in perimeter:
-        if (x,y,d) not in visit:
-            side = flood2(x,y,d, perimeter)
+        if (x,y,d) not in visited:
+            side = unifySides(x,y,d, perimeter, visited)
             sides.append(side)
-            for s in side:
-                visit.add(s)
-    print(sides)
-    return len(sides)
+    return len(perimeter), len(sides)
 
-def flood2(i,j,d, perimeter):
+def unifySides(i,j,d, perimeter, visited):
     stack = [(i, j, d)]
     sides = []
     while stack:
-        current = stack.pop()
-        if current in sides:
+        x, y, dire = stack.pop()
+        if (x,y,dire) in visited:
             continue
-        sides.append(current)
-        for nx, ny in uf.cross(current[0], current[1]):
+        visited.add((x,y,dire))
+        sides.append((x,y,dire))
+        for nx, ny in uf.cross(x, y):
             if (nx,ny,d) in perimeter:
               stack.append((nx,ny,d))
     return sides
 
-def flood(i,j):
+def flowerRegion(i,j, visited):
     stack = [(i,j)]
     region = []
     while stack:
         current = stack.pop()
-        if current in region:
+        if current in visited:
             continue
+        visited.add(current)
         region.append(current)
         for nx, ny in uf.cross(*current):
             if nx >= 0 and nx < N and ny >= 0 and ny < M and lines[nx][ny] == lines[i][j]:
@@ -60,13 +54,13 @@ regions = []
 for i in range(N):
     for j in range(M):
         if (i,j) not in visited:
-            region = flood(i,j)
+            region = flowerRegion(i,j, visited)
             regions.append(region)
-            for cord in region:
-                visited.add(cord)
-count = 0
+
+first = 0
+second = 0
 for region in regions:
-    s = sides(region)
-    count += len(region) * s
-    print(len(region), s)
-print(count)
+    perimeter, sideLength  = solve(region)
+    first += len(region) * perimeter
+    second += len(region * sideLength)
+print(first, second)
