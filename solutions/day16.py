@@ -91,7 +91,7 @@ path = dijkstra((sx,sy,1), g)
 num = path[ex,ey,0][1]
 
 count = set()
-paths = solve(num, g, (sx,sy,1))
+paths = solve2(num, g, (sx,sy,1))
 for path in paths:
     for x,y,d in path:
         count.add((x,y))
