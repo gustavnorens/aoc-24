@@ -69,12 +69,12 @@ def dijkstra(start, graph):
             heapq.heappush(pq, (ncost + cost, dst, ndst))
     return path
 
-def solve(shortest, graph, start):
+def solve2(shortest, graph, start):
     final = []
-    stack = [(start, 0, [start])]
+    pq = [(0,start, [start])]
     memo = {}
-    while stack:
-        curr, score, path = stack.pop()
+    while pq:
+        score, curr, path = heapq.heappop(pq)
         x, y, _ = curr
         if curr in memo and memo[curr] < score:
             continue
@@ -83,9 +83,8 @@ def solve(shortest, graph, start):
             final.append(path)
         for ncost, nx, ny, nd in graph[curr]:
             new = (nx, ny, nd)
-            new_score = ncost + score
-            if new_score <= shortest:
-                stack.append((new, new_score, path + [new]))
+            if ncost + score <= shortest:
+                heapq.heappush(pq, (ncost + score, new, path + [new]))
     return final
     
 path = dijkstra((sx,sy,1), g)
